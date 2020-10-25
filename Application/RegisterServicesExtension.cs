@@ -1,10 +1,20 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Application
 {
-    public class RegisterServicesExtension
+    public static class RegisterServicesExtension
     {
+
+        // AddApplication
+        public static void AddApplication(this IServiceCollection services)
+        {
+            // Mediator PAttern - Registering
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+        }
     }
 }

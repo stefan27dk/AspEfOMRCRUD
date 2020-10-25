@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public  interface IApplicationDbContext
+    public  interface IApplicationDbContext 
     {
-       //Db Sets
-       DbSet<Student> Students { get; set; }  
+        //Db Sets
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
-       //Tasks
-       Task<int> SaveChangesAsync();
+        //Tasks
+        Task<int> SaveChangesAsync();
     }
 }
