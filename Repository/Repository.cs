@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Repository
 {
     public abstract class Repository<TEntity, TContext> : IRepository<TEntity>
-     where TEntity : class, IBaseEntity where TContext : IApplicationDbContext     
+     where TEntity : class, IBaseEntity 
+     where TContext : IApplicationDbContext     
     {
         //DB Context
         private readonly TContext context;
@@ -27,44 +28,60 @@ namespace Repository
 
         // ADD
         public async Task<TEntity> Add(TEntity entity)
-        {
-            throw new NotImplementedException();
+        {    
+            context.Set<TEntity>().Add(entity);
+            await context.SaveChangesAsync(); // Waits for async executing of "context.Set<TEntity>().Add(entity);" and than it SavesAsync. 
+            return entity;
         }
 
 
 
 
         // Delete
-        public Task<TEntity> Delete(int id)
+        public async Task<TEntity> Delete(int id)
         {
-            throw new NotImplementedException();
+            // Find Entity
+            var entity = await context.Set<TEntity>().FindAsync(id);
+            if(entity == null)
+            {
+                return entity;
+            }
+
+            // Remove
+            context.Set<TEntity>().Remove(entity);
+            await context.SaveChangesAsync(); // Save
+
+            return entity;
         }
 
 
 
 
         // Get
-        public Task<TEntity> Get(int id)
+        public async Task<TEntity> Get(int id)
         {
-            throw new NotImplementedException();
+            return await context.Set<TEntity>().FindAsync(id); // Find
         }
 
 
 
 
+
         //Get All
-        public Task<List<TEntity>> GetAll()
+        public async Task<List<TEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            return await context.Set<TEntity>().ToListAsync(); // Return List of All Entities of this type
         }
 
 
 
 
         // Update
-        public Task<TEntity> Update(TEntity entity)
+        public async Task<TEntity> Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            context.Entry(entity).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+            return entity;
         }
     }
 }

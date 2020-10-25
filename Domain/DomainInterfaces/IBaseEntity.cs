@@ -5,8 +5,7 @@ using System.Text;
 namespace Domain.Common
 {
     public interface IBaseEntity
-    {
-       
-        public int Id { get; set; }
+    {     
+         int Id { get; set; }
     }
 }
