@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Command\" />
-    <Folder Include="Services\Query\" />
+    <Folder Include="Services\SchoolClassServices\ShoolQueries\" />
+    <Folder Include="Services\SchoolClassServices\ShoolComands\" />
+    <Folder Include="Services\StudentServices\StudentQueries\" />
   </ItemGroup>
 
   <ItemGroup>
