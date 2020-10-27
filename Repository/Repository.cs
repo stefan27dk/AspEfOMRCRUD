@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public abstract class Repository<TEntity, TContext> : IRepository<TEntity>
+    public class Repository<TEntity, TContext> : IRepository<TEntity>
      where TEntity : class, IBaseEntity 
      where TContext : IApplicationDbContext     
     {
         //DB Context
-        private readonly TContext context;
+        private readonly IApplicationDbContext context;
 
 
 
@@ -57,11 +57,11 @@ namespace Repository
 
 
 
-        // Get
-        public async Task<TEntity> Get(int id)
-        {
-            return await context.Set<TEntity>().FindAsync(id); // Find
-        }
+        //// Get
+        //public async Task<TEntity> Get(int id)
+        //{
+        //    return await context.Set<TEntity>().FindAsync(id); // Find
+        //}
 
 
 

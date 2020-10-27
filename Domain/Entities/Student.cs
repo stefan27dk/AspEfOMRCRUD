@@ -12,7 +12,7 @@ namespace Domain.Entities
         // Props
         [StringLength(30, MinimumLength = 3)] // Data Field Max 30 and min 3 chars
         [Column(TypeName = "nvarchar(30)")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")] // Only Leters allowed
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")] // Only Leters allowed
         public string FirstName { get; set; }
 
     }
