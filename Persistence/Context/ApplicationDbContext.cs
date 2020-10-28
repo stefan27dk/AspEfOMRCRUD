@@ -22,6 +22,7 @@ namespace Persistence.Context
         // On Model Creating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Student>().Property(p => p.FirstName).HasColumnType("nvarchar(30)");     
             base.OnModelCreating(modelBuilder);
         }
          

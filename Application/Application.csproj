@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Services\SchoolClassServices\ShoolQueries\" />
     <Folder Include="Services\SchoolClassServices\ShoolComands\" />
-    <Folder Include="Services\StudentServices\StudentQueries\" />
   </ItemGroup>
 
   <ItemGroup>

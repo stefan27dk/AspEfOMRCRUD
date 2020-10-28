@@ -1,5 +1,7 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Interfaces;
+using Domain.Entities;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;      
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,7 +16,7 @@ namespace Application
         public static void AddApplication(this IServiceCollection services)
         {
             // Mediator PAttern - Registering
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly());      
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Services.Command;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,14 +17,19 @@ namespace Persistence
         // AddPersistence ::Method::
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            // Db Context - Registration
+            //============= Db Context - Registration ====================
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), // Connectionstring
-            b => b.MigrationsAssembly("AspEfOMRCRUD.Persistence.Migrations"))); // Migrations Path
+            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))); // Connectionstring
+            //b => b.MigrationsAssembly("AspEfOMRCRUD.Persistence.Migrations"))); // Migrations Path
+                                
+            
+            //============= Db Context - Interface - Registration =========   
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()); // Register the IApplication Db context
+
+
+
             // Db Context is registered here like in the startup.cs, this is extension class of the startup class
             // This Class is registered in the startup.cs
-
-             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()); // Register the IApplication Db context
         }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using Repository.EntityRepositories;
 
 namespace Web
 {
@@ -28,8 +29,9 @@ namespace Web
         // Configure Services
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
-            services.AddApplication();
             services.AddPersistence(Configuration);
+            services.AddApplication();
+            services.AddScoped<IStudentRepository, StudentRepository>(); // Student Repository   
             services.AddControllersWithViews();
         }
 
