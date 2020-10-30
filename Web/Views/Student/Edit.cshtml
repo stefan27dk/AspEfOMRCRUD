@@ -19,7 +19,7 @@
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" asp-route-id="@Model.Id" asp-route-firstname="@Model.FirstName" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
