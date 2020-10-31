@@ -86,7 +86,7 @@ namespace Repository
 
             if (entity_exist != null)
             {
-                context.Entry(entity_exist).CurrentValues.SetValues(entity);
+                context.Entry(entity_exist).CurrentValues.SetValues(entity); // Replace Values
                 await context.SaveChangesAsync();
                 return entity_exist.Id;
             }

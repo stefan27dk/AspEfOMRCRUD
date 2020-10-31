@@ -40,14 +40,11 @@ namespace Application.Services.StudentServices.StudentCommands
 
             // Update - Handle Student  || Task ||    
             public async Task<int> Handle(UpdateStudentCommand command, CancellationToken cancellationToken)
-            {
-
+            {   
                 Student student = new Student();
                 student.FirstName = command.FirstName;
-                student.Id = command.Id;
-                   
-                 return await _studentRepository.Update(student);
-
+                student.Id = command.Id;    
+                return await _studentRepository.Update(student);     
             }
         }    
     }

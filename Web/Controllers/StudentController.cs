@@ -86,7 +86,7 @@ namespace Web.Controllers
         public IActionResult Edit(string firstname, int Id)
         {
             Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
-            if (student == null) { return NotFound(); }
+            if (student.FirstName == null) { return NotFound(); }
             return View(student);
         }
 
@@ -104,8 +104,7 @@ namespace Web.Controllers
                 return NotFound();  // Custome Error Message Later
             }
             
-            return RedirectToAction(nameof(Index));
-
+            return RedirectToAction(nameof(Index));  
         }
 
 
