@@ -97,8 +97,13 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, string firstname)
         {
-            int Id = await Mediator.Send(new UpdateStudentCommand { Id = id, FirstName = firstname});;
+            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = id, FirstName = firstname});
 
+            if(UpdatedEntityId == default)
+            {
+                return NotFound();  // Custome Error Message Later
+            }
+            
             return RedirectToAction(nameof(Index));
 
         }

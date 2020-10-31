@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Domain.Common;
 using System.Threading.Tasks;
+using Domain.Entities;
+using System.Linq;
 
 namespace Repository
 {
@@ -77,11 +79,21 @@ namespace Repository
 
 
         // Update
-        public async Task<TEntity> Update(TEntity entity)
+        public async Task<int> Update(TEntity entity)
         {
-            context.Entry(entity).State = EntityState.Modified;
-            await context.SaveChangesAsync();
-            return entity;
+            // Get By Id
+            var entity_exist = context.Set<TEntity>().FirstOrDefault(a => a.Id == entity.Id);
+
+            if (entity_exist != null)
+            {
+                context.Entry(entity_exist).CurrentValues.SetValues(entity);
+                await context.SaveChangesAsync();
+                return entity_exist.Id;
+            }
+            else
+            {    
+                return default;      
+            }
         }
     }
 }

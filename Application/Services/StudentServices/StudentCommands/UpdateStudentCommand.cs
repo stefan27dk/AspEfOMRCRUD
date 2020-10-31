@@ -44,10 +44,10 @@ namespace Application.Services.StudentServices.StudentCommands
 
                 Student student = new Student();
                 student.FirstName = command.FirstName;
-                student.Id = command.Id;    
-                await _studentRepository.Update(student);
+                student.Id = command.Id;
                    
-                return student.Id;
+                 return await _studentRepository.Update(student);
+
             }
         }    
     }
