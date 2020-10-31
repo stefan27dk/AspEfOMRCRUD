@@ -18,10 +18,12 @@ namespace Web.Controllers
     public class StudentController : BaseController
     {
 
-          
-          
+        // POST: Student/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.   
 
-        // Student View
+
+        // Index - || Student View ||
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -53,19 +55,14 @@ namespace Web.Controllers
 
 
 
-        // Create - || Student View ||
+        // ================= Create - || Student View || ========================================== 
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Student/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
 
-
-
-         // Create - || Logic - Student ||
+        // Create - || Logic - Student || ----------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName,Id")] Student student, CreateStudentCommand command)
@@ -80,9 +77,12 @@ namespace Web.Controllers
         }
 
 
+         
 
 
-        // Edit / Update - Student || View ||
+
+
+        // ================== Edit / Update - || Student View || =====================================
         public IActionResult Edit(string firstname, int Id)
         {
             Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
@@ -92,12 +92,7 @@ namespace Web.Controllers
 
 
 
-        // POST: Student/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-
-
-        // Edit / Update - Student || Logic ||
+        // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, string firstname)
@@ -111,10 +106,9 @@ namespace Web.Controllers
 
 
 
+                 
 
-
-
-        // Delete - || Student View |
+        // ================= Delete - || Student View || ================================================== 
         public IActionResult Delete(string firstname, int Id)
         {   
             Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
@@ -122,24 +116,22 @@ namespace Web.Controllers
             return View(student);
         }
 
-
-
-
-
-        // Delete - || Logic Student |   
+             
+        // Delete - || Logic Student || ---------------------------------------------------------------------  
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {      
-           int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = id });  // Delete Student
-
+            int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = id });  // Delete Student
             if(Id == default)
             {
                 return RedirectToAction(nameof(Index));  // Maybe Custom Eror Message 
-            }
-
+            }   
             return RedirectToAction(nameof(Index)); // Return Index View
         }
+
+
+
 
         //private bool StudentExists(int id)
         //{
