@@ -87,7 +87,7 @@ namespace Repository
             var entity_exist = context.Set<TEntity>().FirstOrDefault(a => a.Id == entity.Id);
 
 
-                if (entity != null)
+                if (entity_exist != null)
                 {
                        try
                        { 
