@@ -7,5 +7,8 @@ namespace Domain.Common
     public interface IBaseEntity
     {     
          int Id { get; set; }
+
+
+         public byte[] RowVersion { get; set; }
     }
 }

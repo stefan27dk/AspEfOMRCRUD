@@ -21,6 +21,8 @@ namespace Application.Services.StudentServices.StudentCommands
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")] // Only Leters allowed
         public int Id { get; set; }
         public string FirstName { get; set; }
+        public byte[] RowVersion { get; set; }
+
 
 
 
@@ -43,7 +45,8 @@ namespace Application.Services.StudentServices.StudentCommands
             {   
                 Student student = new Student();
                 student.FirstName = command.FirstName;
-                student.Id = command.Id;    
+                student.Id = command.Id;
+                student.RowVersion = command.RowVersion;
                 return await _studentRepository.Update(student);     
             }
         }    

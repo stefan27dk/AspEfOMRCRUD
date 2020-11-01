@@ -23,7 +23,7 @@ namespace Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.   
 
 
-        // Index - || Student View ||
+        // Index Get All- || Student View ||
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -83,10 +83,13 @@ namespace Web.Controllers
 
 
         // ================== Edit / Update - || Student View || =====================================
-        public IActionResult Edit(string firstname, int Id)
-        {
-            Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
-            if (student.FirstName == null) { return NotFound(); }
+        public async Task<IActionResult> Edit(/*string firstname, */int Id /*byte[] rowVersion*/) // #1 Getting Data from the Index View
+        {    
+            //Student student = new Student { FirstName = firstname, Id = Id, RowVersion = rowVersion }; // For showing the Name and using the Id from the IndexView in the Edit view  
+
+           var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id });
+            if (student == null) { return NotFound(); }
+
             return View(student);
         }
 
@@ -95,9 +98,9 @@ namespace Web.Controllers
         // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string firstname)
+        public async Task<IActionResult> Edit(int id, string firstname, byte[] rowVersion)
         {
-            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = id, FirstName = firstname});
+            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = id, FirstName = firstname, RowVersion = rowVersion});
 
             if(UpdatedEntityId == default)
             {

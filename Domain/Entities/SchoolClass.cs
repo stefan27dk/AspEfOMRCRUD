@@ -12,9 +12,10 @@ namespace Domain.Entities
         // Props  
         [StringLength(5, MinimumLength = 3)] // Data Field Max 30 and min 3 chars
         [Column(TypeName = "nvarchar(10)")]
+        [ConcurrencyCheck]
         public string ClassName { get; set; }
 
-
+        
         //Shadow Props - Foreign Key
         public List<Student> Students { get; set; } = new List<Student>();
 

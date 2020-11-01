@@ -9,5 +9,10 @@ namespace Domain.Common
     {   
         [Key]
         public int Id { get; set; }
+
+
+        // Optimistic Concurrency
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }

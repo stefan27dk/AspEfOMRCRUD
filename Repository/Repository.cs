@@ -7,6 +7,7 @@ using Domain.Common;
 using System.Threading.Tasks;
 using Domain.Entities;
 using System.Linq;
+using Persistence.Migrations;
 
 namespace Repository
 {
@@ -81,19 +82,31 @@ namespace Repository
         // Update
         public async Task<int> Update(TEntity entity)
         {
+          
             // Get By Id
             var entity_exist = context.Set<TEntity>().FirstOrDefault(a => a.Id == entity.Id);
 
-            if (entity_exist != null)
-            {
-                context.Entry(entity_exist).CurrentValues.SetValues(entity); // Replace Values
-                await context.SaveChangesAsync();
-                return entity_exist.Id;
-            }
-            else
-            {    
-                return default;      
-            }
+
+                if (entity != null)
+                {
+                       try
+                       {
+                   
+                         context.Entry(entity_exist).CurrentValues.SetValues(entity); // Replace Values
+                         context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion;
+                         await context.SaveChangesAsync();
+                         return entity.Id;
+                
+                       }
+                       catch(DbUpdateConcurrencyException)
+                       {
+                           return default;
+                       }
+                    
+                }
+
+            return default;  
+           
         }
     }
 }
