@@ -90,13 +90,11 @@ namespace Repository
                 if (entity != null)
                 {
                        try
-                       {
-                   
+                       { 
                          context.Entry(entity_exist).CurrentValues.SetValues(entity); // Replace Values
                          context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion;
                          await context.SaveChangesAsync();
-                         return entity.Id;
-                
+                         return entity.Id;   
                        }
                        catch(DbUpdateConcurrencyException)
                        {
@@ -105,7 +103,7 @@ namespace Repository
                     
                 }
 
-            return default;  
+                return default;  
            
         }
     }

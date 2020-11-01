@@ -83,11 +83,9 @@ namespace Web.Controllers
 
 
         // ================== Edit / Update - || Student View || =====================================
-        public async Task<IActionResult> Edit(/*string firstname, */int Id /*byte[] rowVersion*/) // #1 Getting Data from the Index View
-        {    
-            //Student student = new Student { FirstName = firstname, Id = Id, RowVersion = rowVersion }; // For showing the Name and using the Id from the IndexView in the Edit view  
-
-           var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id });
+        public async Task<IActionResult> Edit(int Id)  
+        {     
+            var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
             if (student == null) { return NotFound(); }
 
             return View(student);
@@ -98,10 +96,10 @@ namespace Web.Controllers
         // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string firstname, byte[] rowVersion)
+        public async Task<IActionResult> Edit(int id, [Bind("FirstName,Id, RowVersion")] Student student)
         {
-            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = id, FirstName = firstname, RowVersion = rowVersion});
-
+            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = student.Id, FirstName = student.FirstName, RowVersion = student.RowVersion});
+       
             if(UpdatedEntityId == default)
             {
                 return NotFound();  // Custome Error Message Later
