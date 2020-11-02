@@ -6,11 +6,14 @@ using Application;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
 using Repository.EntityRepositories;
+using Web.Data;
 
 namespace Web
 {
@@ -29,10 +32,35 @@ namespace Web
         // Configure Services
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
+
+             services.AddDbContext<LogInContext>(options =>
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+                  //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                  //.AddEntityFrameworkStores<LogInContext>();
+
+            // Log In
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
+
             services.AddPersistence(Configuration);
             services.AddApplication();
             services.AddScoped<IStudentRepository, StudentRepository>(); // Student Repository   
             services.AddControllersWithViews();
+
+
+            
+
+
         }
 
        
@@ -51,6 +79,7 @@ namespace Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+              
             }
             else
             {
@@ -60,15 +89,23 @@ namespace Web
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();   
-            app.UseRouting();   
-            app.UseAuthorization(); 
-            
+            app.UseRouting();
+
+
+
+            // Log In 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
+
             // End Points
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();  // Log In   
             });
         }
     }
