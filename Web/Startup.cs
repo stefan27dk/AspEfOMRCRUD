@@ -29,18 +29,18 @@ namespace Web
 
 
 
-        // Configure Services
+        // Configure Services ================================================================================= 
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
-
+             // log in
              services.AddDbContext<LogInContext>(options =>
-             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
-                  //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                  //.AddEntityFrameworkStores<LogInContext>();
+             options.UseSqlServer(Configuration.GetConnectionString("LogInContextConnection")));
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //.AddEntityFrameworkStores<LogInContext>();
+
 
             // Log In
-            services.Configure<IdentityOptions>(options =>
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 // Password settings.
                 options.Password.RequireDigit = false;
@@ -49,7 +49,22 @@ namespace Web
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
-            });
+
+            }) .AddEntityFrameworkStores<LogInContext>();
+
+        
+            
+            // Log In
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    // Password settings.
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequireLowercase = false;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequiredLength = 6;
+            //    options.Password.RequiredUniqueChars = 1;
+            //});
 
 
             services.AddPersistence(Configuration);
@@ -57,8 +72,11 @@ namespace Web
             services.AddScoped<IStudentRepository, StudentRepository>(); // Student Repository   
             services.AddControllersWithViews();
 
+            // Log In
+            services.AddRazorPages();
 
-            
+
+
 
 
         }
@@ -67,15 +85,16 @@ namespace Web
 
 
 
-        // Configure
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Configure ===========================================================================================
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) 
         {
+            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
 
 
 
 
-            // Default Code------------------------------------------------------------------------------------------------------------------->
+            // Default Code------------------------------------------------------------------------------------>
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -96,6 +115,7 @@ namespace Web
             // Log In 
             app.UseAuthentication();
             app.UseAuthorization();
+     
 
 
 
@@ -105,7 +125,8 @@ namespace Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();  // Log In   
+                endpoints.MapRazorPages();  // Log In 
+                 
             });
         }
     }

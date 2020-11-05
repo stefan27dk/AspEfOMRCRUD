@@ -96,7 +96,7 @@ namespace Web.Controllers
         // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,Id, RowVersion")] Student student)
+        public async Task<IActionResult> Edit(int id, Student student)
         {
             int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = student.Id, FirstName = student.FirstName, RowVersion = student.RowVersion});
        
