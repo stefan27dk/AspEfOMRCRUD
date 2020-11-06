@@ -94,21 +94,21 @@ namespace Web.Controllers
                 
             if (ModelState.IsValid)
             {
-                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false); // Sign In User
 
-                if (result.Succeeded)
+                if (result.Succeeded) // If Login Ok
                 {
-                    if(!string.IsNullOrEmpty(returnUrl))
+                    if(!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) // If redirect Url is ok and is Local
                     {
-                       return Redirect(returnUrl); 
+                       return Redirect(returnUrl); // Redirect to Return Url 
                     }    
-                       return RedirectToAction("Index", "Home");
+                       return RedirectToAction("Index", "Home"); // If Redirect Url invalid return to Home Page
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid LogIn");
+                ModelState.AddModelError(string.Empty, "Invalid LogIn"); // If Login Not Ok
             }
 
-            return View(model);
+            return View(model); // If modelstate is Not ok // Spelling checks password not long enought , pass string where it should be int etc.
         }
 
 
