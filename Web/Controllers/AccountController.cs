@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Web.ViewModels.AccountViewModels;
@@ -19,7 +20,7 @@ namespace Web.Controllers
 
 
         // || Constructor || ====================================================================
-        public  AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -76,22 +77,22 @@ namespace Web.Controllers
         // Log In - View ==================================================================================
         [HttpGet]
         public IActionResult LogIn()
-        {  
+        {
             return View();
         }
 
 
 
         // Log In - Logic ==================================================================================
-        [HttpPost]
+        [HttpPost]   
         public async Task<IActionResult> LogIn(LogInViewModel model)
         {
-            if(ModelState.IsValid)
+                
+            if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
-
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }

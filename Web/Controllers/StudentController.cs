@@ -12,9 +12,11 @@ using Application.Services.Command;
 using Application.Services.StudentServices.StudentQueries;
 using Application.Services.StudentServices.StudentCommands;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]  
     public class StudentController : BaseController
     {
 
@@ -24,7 +26,9 @@ namespace Web.Controllers
 
 
         // Index Get All- || Student View ||
+   
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await Mediator.Send(new GetAllStudentsQuery()));
@@ -56,10 +60,12 @@ namespace Web.Controllers
 
 
         // ================= Create - || Student View || ========================================== 
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
 
 
         // Create - || Logic - Student || ----------------------------------------------------------- 
@@ -83,6 +89,7 @@ namespace Web.Controllers
 
 
         // ================== Edit / Update - || Student View || =====================================
+        [HttpGet]
         public async Task<IActionResult> Edit(int Id)  
         {     
             var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
@@ -113,6 +120,7 @@ namespace Web.Controllers
                  
 
         // ================= Delete - || Student View || ================================================== 
+        [HttpGet]
         public IActionResult Delete(string firstname, int Id)
         {   
             Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
