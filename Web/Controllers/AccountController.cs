@@ -89,7 +89,7 @@ namespace Web.Controllers
         // Log In - Logic ==================================================================================
         [HttpPost]
         [AllowAnonymous]   
-        public async Task<IActionResult> LogIn(LogInViewModel model)
+        public async Task<IActionResult> LogIn(LogInViewModel model, string returnUrl)
         {
                 
             if (ModelState.IsValid)
@@ -98,7 +98,11 @@ namespace Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if(!string.IsNullOrEmpty(returnUrl))
+                    {
+                       return Redirect(returnUrl); 
+                    }    
+                       return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid LogIn");
