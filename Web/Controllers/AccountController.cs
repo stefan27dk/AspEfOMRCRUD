@@ -34,6 +34,7 @@ namespace Web.Controllers
 
         // Register View ========================================================================== 
         [HttpGet]
+        [AllowAnonymous]   
         public IActionResult Register()
         {
             return View();
@@ -42,6 +43,7 @@ namespace Web.Controllers
 
         // Register - Logic =============================================================================
         [HttpPost]
+        [AllowAnonymous]    
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -76,6 +78,7 @@ namespace Web.Controllers
 
         // Log In - View ==================================================================================
         [HttpGet]
+        [AllowAnonymous] 
         public IActionResult LogIn()
         {
             return View();
@@ -84,7 +87,8 @@ namespace Web.Controllers
 
 
         // Log In - Logic ==================================================================================
-        [HttpPost]   
+        [HttpPost]
+        [AllowAnonymous]   
         public async Task<IActionResult> LogIn(LogInViewModel model)
         {
                 

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +34,7 @@ namespace Web
         // Configure Services ================================================================================= 
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
-             // log in
+             // Log in - DbContext
              services.AddDbContext<LogInContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("LogInContextConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -52,19 +54,23 @@ namespace Web
 
             }) .AddEntityFrameworkStores<LogInContext>();
 
-        
-            
-            // Log In
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Password settings.
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequireLowercase = false;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequiredLength = 6;
-            //    options.Password.RequiredUniqueChars = 1;
-            //});
+
+
+
+            // Log In - Authorization to alll Actions 
+            // Its Like Addin [Authorize to all Actions in all Controllers]
+            // In order to be able to acsess this action as Anonymouse user we 
+            // just add [AllowAnonymouse] over the Action
+            services.AddMvc(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                  .RequireAuthenticatedUser()
+                  .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+
+            }).AddXmlSerializerFormatters();
+
+
+
 
 
             services.AddPersistence(Configuration);
