@@ -103,15 +103,20 @@ namespace Web.Controllers
         // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Student student)
+        public async Task<IActionResult> Edit(Student model)
         {
-            int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = student.Id, FirstName = student.FirstName, RowVersion = student.RowVersion});
-       
-            if(UpdatedEntityId == default)
-            {
-                return NotFound();  // Custome Error Message Later
-            }   
-            return RedirectToAction(nameof(Index));  
+            if(ModelState.IsValid)
+            {   
+                int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion});
+                
+                if(UpdatedEntityId == default)
+                {
+                    return NotFound();  // Custome Error Message Later
+                }   
+                return RedirectToAction(nameof(Index));  
+            }
+
+            return View();
         }
 
 
@@ -121,25 +126,39 @@ namespace Web.Controllers
 
         // ================= Delete - || Student View || ================================================== 
         [HttpGet]
-        public IActionResult Delete(string firstname, int Id)
-        {   
-            Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
-            if (student.FirstName == null) {  return NotFound(); }   
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
+            if (student == null) 
+            { 
+                return NotFound(); 
+            }
+            
             return View(student);
+
+
+            //Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
+            //if (student.FirstName == null) {  return NotFound(); }   
+            //return View(student);
         }
 
              
         // Delete - || Logic Student || ---------------------------------------------------------------------  
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {      
-            int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = id });  // Delete Student
-            if(Id == default)
+        public async Task<IActionResult> Delete(Student model)
+        {
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));  // Maybe Custom Eror Message 
-            }   
-            return RedirectToAction(nameof(Index)); // Return Index View
+                int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion });  // Delete Student
+                if (Id == default)
+                {
+                    return NotFound();
+                    //return RedirectToAction(nameof(Index));  // Maybe Custom Eror Message 
+                }
+                return RedirectToAction(nameof(Index)); // Return Index View
+            }  
+            return View();
         }
 
 

@@ -13,6 +13,6 @@ namespace Application.Interfaces
         //Task<T> Get(int id);
         Task<T> Add(T entity);
         Task<int> Update(T entity);
-        Task<T> Delete(int id);
+        Task<int> Delete(T entity);
     }
 }

@@ -41,20 +41,30 @@ namespace Repository
 
 
         // Delete
-        public async Task<TEntity> Delete(int id)
+        public async Task<int> Delete(TEntity entity)
         {
-            // Find Entity
-            var entity = await context.Set<TEntity>().FindAsync(id);
-            if(entity == null)
+        
+            var entity_exist = context.Set<TEntity>().FirstOrDefault(a => a.Id == entity.Id);
+                   
+            if (entity_exist != null)
             {
-                return entity;
+                try
+                {    
+                    context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion;
+                    context.Set<TEntity>().Remove(entity_exist);
+                    await context.SaveChangesAsync(); // Save
+                    return entity.Id;
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return default;
+                }
+
             }
 
-            // Remove
-            context.Set<TEntity>().Remove(entity);
-            await context.SaveChangesAsync(); // Save
+            return default;
 
-            return entity;
+
         }
 
 

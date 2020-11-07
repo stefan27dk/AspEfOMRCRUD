@@ -15,10 +15,7 @@ namespace Application.Services.StudentServices.StudentCommands
     // =========== Update Student Command - || Class || ====================    
     public class UpdateStudentCommand : IRequest<int>
     {    
-        // Student - Props
-        [StringLength(30, MinimumLength = 3)] // Data Field Max 30 and min 3 chars
-        [Column(TypeName = "nvarchar(30)")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")] // Only Leters allowed
+        // Student - Props     
         public int Id { get; set; }
         public string FirstName { get; set; }
         public byte[] RowVersion { get; set; }

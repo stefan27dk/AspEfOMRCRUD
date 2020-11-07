@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Domain.Entities;
+using MediatR;
 using Repository.EntityRepositories;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ namespace Application.Services.StudentServices.StudentCommands
     // =========== DeleteStudentByIdCommand || Class || ====================
     public class DeleteStudentByIdCommand :IRequest<int>
     {
-
-        // Props
-        public int Id { get; set; } // StudentId
+         
+        // Student - Props     
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public byte[] RowVersion { get; set; }
 
 
 
@@ -35,9 +38,15 @@ namespace Application.Services.StudentServices.StudentCommands
             // Handle || Task ||
             public async Task<int> Handle(DeleteStudentByIdCommand command, CancellationToken cancellationToken)
             {
-                var student = await _studentRepository.Delete(command.Id);
-                if(student == null) { return default; }
-                return student.Id;
+                Student student = new Student();
+                student.FirstName = command.FirstName;
+                student.Id = command.Id;
+                student.RowVersion = command.RowVersion;
+                return await _studentRepository.Delete(student);
+
+                //var student = await _studentRepository.Delete(command);
+                //if(student == null) { return default; }
+                //return student.Id;
             }
         }
     }
