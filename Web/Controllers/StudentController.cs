@@ -13,6 +13,8 @@ using Application.Services.StudentServices.StudentQueries;
 using Application.Services.StudentServices.StudentCommands;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using Microsoft.VisualBasic;
 
 namespace Web.Controllers
 {
@@ -93,7 +95,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Edit(int Id)  
         {     
             var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
-            if (student == null) { return NotFound(); }
+            if (student == null) { return RedirectToAction("Index", "Student"); }
 
             return View(student);
         }
@@ -111,7 +113,8 @@ namespace Web.Controllers
                 
                 if(UpdatedEntityId == default)
                 {
-                    return NotFound();  // Custome Error Message Later
+                    TempData["ConcurrencyConflictMsg"] = "Concurrency Conflict - Item was Edited";
+                    return RedirectToAction("Edit", "Student", $"{model.Id}");
                 }   
                 return RedirectToAction(nameof(Index));  
             }
@@ -134,13 +137,10 @@ namespace Web.Controllers
                 return NotFound(); 
             }
             
-            return View(student);
-
-
-            //Student student = new Student { FirstName = firstname, Id = Id }; // For showing the Name and using the Id from the IndexView to the Delete view  
-            //if (student.FirstName == null) {  return NotFound(); }   
-            //return View(student);
+            return View(student);        
         }
+
+
 
              
         // Delete - || Logic Student || ---------------------------------------------------------------------  
@@ -152,12 +152,12 @@ namespace Web.Controllers
             {
                 int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion });  // Delete Student
                 if (Id == default)
-                {
-                    return NotFound();
-                    //return RedirectToAction(nameof(Index));  // Maybe Custom Eror Message 
+                {     
+                    TempData["ConcurrencyConflictMsg"] = "Concurrency Conflict - Item was Edited";
+                    return RedirectToAction("Delete", "Student", $"{model.Id}");
                 }
                 return RedirectToAction(nameof(Index)); // Return Index View
-            }  
+            }
             return View();
         }
 
