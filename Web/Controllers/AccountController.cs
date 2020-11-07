@@ -98,7 +98,7 @@ namespace Web.Controllers
 
                 if (result.Succeeded) // If Login Ok
                 {
-                    if(!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) // If redirect Url is ok and is Local
+                    if(!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) // If redirect Url is ok and is Local Url
                     {
                        return Redirect(returnUrl); // Redirect to Return Url 
                     }    
