@@ -17,7 +17,6 @@ namespace Domain.Entities
 
         [ConcurrencyCheck]
         public string FirstName { get; set; }
-
-
+         
     }
 }

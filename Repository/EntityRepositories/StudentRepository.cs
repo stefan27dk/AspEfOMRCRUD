@@ -15,8 +15,7 @@ namespace Repository.EntityRepositories
         //DB COntext
         private readonly IApplicationDbContext context;
 
-
-
+          
 
         // Constructor
         public StudentRepository(ApplicationDbContext context) : base(context) 
@@ -27,11 +26,11 @@ namespace Repository.EntityRepositories
 
 
 
-        // Get   
-        public async Task<Student> Get(int id, CancellationToken cancellationToken)
-        {
-            return await context.Set<Student>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);   
-        }
+        //// Get   
+        //public async Task<Student> Get(int id, CancellationToken cancellationToken)
+        //{
+        //    return await context.Set<Student>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);   
+        //}
 
 
         // We can add new methods specific to the Student repository here if needed in the future

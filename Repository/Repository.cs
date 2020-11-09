@@ -80,11 +80,11 @@ namespace Repository
 
 
 
-        //Get All
-        public async Task<List<TEntity>> GetAll()
-        {
-            return await context.Set<TEntity>().ToListAsync(); // Return List of All Entities of this type
-        }
+        ////Get All
+        //public async Task<List<TEntity>> GetAll()
+        //{
+        //    return await context.Set<TEntity>().ToListAsync(); // Return List of All Entities of this type
+        //}
 
 
 

@@ -7,7 +7,7 @@ namespace Repository.EntityRepositories
 {
     public interface IStudentRepository : IRepository<Student>
     {
-        // Get by ID
-        Task<Student> Get(int id, CancellationToken cancellationToken);          
+        //// Get by ID
+        //Task<Student> Get(int id, CancellationToken cancellationToken);          
     }
 }
