@@ -76,13 +76,28 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName,Id")] Student student, CreateStudentCommand command)
         {
+            //if (ModelState.IsValid)
+            //{    
+            //     command.FirstName = student.FirstName;
+            //     await Mediator.Send(command);   
+            //     return RedirectToAction(nameof(Index));
+            //}
+            //return View(student);
+
+
+
+
+            //------NEW------------------------############
+             
+
             if (ModelState.IsValid)
-            {    
-                 command.FirstName = student.FirstName;
-                 await Mediator.Send(command);   
-                 return RedirectToAction(nameof(Index));
+            {
+                command.StudentDTO.FirstName = student.FirstName;
+                await Mediator.Send(command);
+                return RedirectToAction(nameof(Index));
             }
             return View(student);
+
         }
 
 

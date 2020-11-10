@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Entities;
+using Domain.ViewModels;
 using MediatR;
 using Repository.EntityRepositories;
 using System;
@@ -15,12 +16,12 @@ namespace Application.Services.Command
     // =========== Student Command || Class || ====================     
     public class CreateStudentCommand : IRequest<int>
     {
-        // Student - Props
-        [StringLength(30, MinimumLength = 3)] // Data Field Max 30 and min 3 chars
-        [Column(TypeName = "nvarchar(30)")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use letters only please")] // Only Leters allowed
-        public string FirstName { get; set; }
+        // Student - Props    
+        //public string FirstName { get; set; }
 
+
+        //-----New-------------------------##############
+        public Student StudentDTO { get; set; } = new Student();
 
 
 
@@ -42,10 +43,17 @@ namespace Application.Services.Command
             // Handle Student  || Task ||
             public async Task<int> Handle(CreateStudentCommand command, CancellationToken cancellationToken)
             {
-                var student = new Student();
-                student.FirstName = command.FirstName;
-                 await _studentRepository.Add(student);
-                return student.Id;  
+                //var student = new student();
+                //student.firstname = command.firstname;
+                //await _studentrepository.add(student);
+                //return student.id;     
+
+
+                //--------------NEW-----------------------------##############
+
+
+                await _studentRepository.Add(command.StudentDTO);
+                return command.StudentDTO.Id;
             }
         }
     }
