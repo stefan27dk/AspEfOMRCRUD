@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Microsoft.VisualBasic;
 using Query.EntityQueryHandlers;
- 
+using Query.EntityQueries;
 
 namespace Web.Controllers
 {
@@ -25,7 +25,7 @@ namespace Web.Controllers
 
         // POST: Student/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.   
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598  
 
 
         // Index Get All- || Student View ||

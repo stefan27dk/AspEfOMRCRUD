@@ -27,8 +27,8 @@ namespace Query.EntityQueryHandlers
             this.context = context;
         }
 
-        
-     
+
+
 
         // Get List of StudentViewModels
         public async Task<List<StudentViewModel>> Get_All_ViewModels_Async()

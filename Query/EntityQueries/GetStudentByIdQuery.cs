@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Services.StudentServices.StudentQueries
+namespace Query.EntityQueries
 {
     // =========== GetByID Student Query - || Class || ====================     
     public class GetStudentByIdQuery : IRequest<Student>

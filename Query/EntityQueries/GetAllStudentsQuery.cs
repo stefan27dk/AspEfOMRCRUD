@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Services.StudentServices.StudentQueries
+namespace Query.EntityQueries
 {
     // =========== GetAll Student Query - || Class || ====================       
     public class GetAllStudentsQuery : IRequest<IEnumerable<Student>>

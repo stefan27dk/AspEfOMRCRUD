@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Application;
+using Application.Interfaces.QueryHandlerInterfaces;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +17,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using Query;
+using Query.EntityQueryHandlers;
 using Repository.EntityRepositories;
 using Web.Data;
 
@@ -34,11 +39,18 @@ namespace Web
         // Configure Services ================================================================================= 
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
-             // Log in - DbContext
-             services.AddDbContext<LogInContext>(options =>
+
+           
+
+
+            // Log in - DbContext
+            services.AddDbContext<LogInContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("LogInContextConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //.AddEntityFrameworkStores<LogInContext>();
+
+
+         
 
 
             // Log In
@@ -72,10 +84,13 @@ namespace Web
 
 
 
+            
 
             services.AddPersistence(Configuration);
+            services.AddQuery();
             services.AddApplication();
             services.AddScoped<IStudentRepository, StudentRepository>(); // Student Repository   
+            services.AddScoped<IStudentQueryHandler, StudentQueryHandler>(); // Student Query Handler   
             services.AddControllersWithViews();
 
             // Log In
