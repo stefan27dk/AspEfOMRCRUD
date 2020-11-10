@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\StudentServices\StudentQueries\**" />
+    <EmbeddedResource Remove="Services\StudentServices\StudentQueries\**" />
+    <None Remove="Services\StudentServices\StudentQueries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Services\SchoolClassServices\ShoolComands\" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Query
@@ -34,7 +35,7 @@ namespace Query
           
           
              // Get All
-             public async Task<List<TEntity>> GetAll()
+             public async Task<List<TEntity>> GetAllAsync()
              {
                  return await context.Set<TEntity>().ToListAsync(); // Return List of All Entities of this type
              }
@@ -44,7 +45,7 @@ namespace Query
           
           
              // Get
-             public async Task<TEntity> Get(int id)
+             public async Task<TEntity> GetAsync(int id, CancellationToken cancellationToken)
              {
                  return await context.Set<TEntity>().FirstOrDefaultAsync(e=> e.Id == id);
              }

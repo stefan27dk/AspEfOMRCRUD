@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Interfaces.QueryHandlerInterfaces;
+using Domain.Entities;
 using MediatR;
 using Repository.EntityRepositories;
 using System;
@@ -12,6 +13,8 @@ namespace Application.Services.StudentServices.StudentQueries
     // =========== GetByID Student Query - || Class || ====================     
     public class GetStudentByIdQuery : IRequest<Student>
     {
+
+
         // Props
         public int Id { get; set; }
 
@@ -20,21 +23,29 @@ namespace Application.Services.StudentServices.StudentQueries
         // =========== Get - Student - By - Id - Handler - || Class || ====================  
         public class GetStudentByIdHandler : IRequestHandler<GetStudentByIdQuery, Student>
         {
+
+
+
             // Student Repository
-            private readonly IStudentRepository _studentRepository;
+            private readonly IStudentQueryHandler _studentQueryHandler;
+
+
 
 
             // GSBIH - || Constructor ||
-            public GetStudentByIdHandler(IStudentRepository studentRepository)
+            public GetStudentByIdHandler(IStudentQueryHandler studentQueryHandler)
             {
-                _studentRepository = studentRepository;
+                _studentQueryHandler = studentQueryHandler;
             }
+
+
+
 
 
             // GetById - Handle Student  || Task ||   
             public async Task<Student> Handle(GetStudentByIdQuery query, CancellationToken  cancellationToken)
             {
-                var student = await _studentRepository.Get(query.Id, cancellationToken);
+                var student = await _studentQueryHandler.GetAsync(query.Id, cancellationToken);
                 if(student == null)
                 {
                     return null;

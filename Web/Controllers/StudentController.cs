@@ -8,13 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Persistence.Context;
 using Application.Interfaces;
-using Application.Services.Command;
-using Application.Services.StudentServices.StudentQueries;
+using Application.Services.Command;     
 using Application.Services.StudentServices.StudentCommands;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Microsoft.VisualBasic;
+using Query.EntityQueryHandlers;
+ 
 
 namespace Web.Controllers
 {
@@ -32,7 +33,7 @@ namespace Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Index()
-        {
+        {   
             return View(await Mediator.Send(new GetAllStudentsQuery()));
         }
 
