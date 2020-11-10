@@ -34,7 +34,7 @@ namespace Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {   
-            return View(await Mediator.Send(new GetAllStudentsQuery()));
+            return View(await Mediator.Send(new GetAllStudentsAsViewModelsQuery()));
         }
 
 

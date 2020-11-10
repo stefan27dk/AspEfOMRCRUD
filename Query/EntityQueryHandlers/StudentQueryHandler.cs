@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,9 @@ namespace Query.EntityQueryHandlers
         // Get List of StudentViewModels
         public async Task<List<StudentViewModel>> Get_All_ViewModels_Async()
         {
-            return await context.Set<StudentViewModel>().ToListAsync(); // Return List of All Entities of this type   
+            //return await context.Set<StudentViewModel>().ToListAsync(); // Return List of All Entities of this type   
+               
+            return await context.Set<Student>().Select(students => new StudentViewModel { FirstName = students.FirstName, Id = students.Id }).ToListAsync();
         }
 
 
@@ -42,6 +45,10 @@ namespace Query.EntityQueryHandlers
         // Get StudentViewModel By Id
         public async Task<StudentViewModel> Get_ViewModelAsync(int id, CancellationToken cancellationToken)
         {
+
+        
+          
+
             return await context.Set<StudentViewModel>().FirstOrDefaultAsync(e => e.Id == id);
         }
     }
