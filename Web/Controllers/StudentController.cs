@@ -111,7 +111,7 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)  
         {     
-            var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
+            var student = await Mediator.Send(new GetStudentAsViewModelByIdQuery { Id = Id }); // Get by ID
             if (student == null) { return RedirectToAction("Index", "Student"); }
 
             return View(student);
@@ -126,7 +126,7 @@ namespace Web.Controllers
         {
             if(ModelState.IsValid)
             {   
-                int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion});
+                int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { StudentDTO = new Student { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion } });
                 
                 if(UpdatedEntityId == default)
                 {

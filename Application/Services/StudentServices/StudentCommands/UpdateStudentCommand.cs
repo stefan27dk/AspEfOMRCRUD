@@ -14,11 +14,15 @@ namespace Application.Services.StudentServices.StudentCommands
 {
     // =========== Update Student Command - || Class || ====================    
     public class UpdateStudentCommand : IRequest<int>
-    {    
-        // Student - Props     
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public byte[] RowVersion { get; set; }
+    {
+        //// Student - Props     
+        //public int Id { get; set; }
+        //public string FirstName { get; set; }
+        //public byte[] RowVersion { get; set; }
+
+
+        //-----New-------------------------##############
+        public Student StudentDTO { get; set; }
 
 
 
@@ -39,12 +43,16 @@ namespace Application.Services.StudentServices.StudentCommands
 
             // Update - Handle Student  || Task ||    
             public async Task<int> Handle(UpdateStudentCommand command, CancellationToken cancellationToken)
-            {   
-                Student student = new Student();
-                student.FirstName = command.FirstName;
-                student.Id = command.Id;
-                student.RowVersion = command.RowVersion;
-                return await _studentRepository.Update(student);     
+            {
+                  
+                return await _studentRepository.Update(command.StudentDTO);
+                
+                //-------OLD---------------------------------
+                //Student student = new Student();
+                //student.FirstName = command.FirstName;
+                //student.Id = command.Id;
+                //student.RowVersion = command.RowVersion;
+                //return await _studentRepository.Update(student);     
             }
         }    
     }
