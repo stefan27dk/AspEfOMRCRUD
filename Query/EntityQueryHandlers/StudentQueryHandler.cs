@@ -33,9 +33,7 @@ namespace Query.EntityQueryHandlers
 
         // Get List of StudentViewModels
         public async Task<List<StudentViewModel>> Get_All_ViewModels_Async()
-        {
-            //return await context.Set<StudentViewModel>().ToListAsync(); // Return List of All Entities of this type   
-               
+        {      
             return await context.Set<Student>().Select(student => new StudentViewModel { FirstName = student.FirstName, Id = student.Id, RowVersion = student.RowVersion }).ToListAsync();
         }
 

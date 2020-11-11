@@ -119,9 +119,9 @@ namespace Web.Controllers
         {
             if(ModelState.IsValid)
             {   
-                int UpdatedEntityId = await Mediator.Send(new UpdateStudentCommand { StudentDTO = new Student { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion } });
+                int succsess = await Mediator.Send(new UpdateStudentCommand { StudentDTO = new Student { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion } });
                 
-                if(UpdatedEntityId == default)
+                if(succsess == default)
                 {
                     TempData["ConcurrencyConflictMsg"] = "Concurrency Conflict - Item was Edited";
                     return RedirectToAction("Edit", "Student", $"{model.Id}");
@@ -129,7 +129,7 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(Index));  
             }
 
-            return View();
+            return View(model);
         }
 
 

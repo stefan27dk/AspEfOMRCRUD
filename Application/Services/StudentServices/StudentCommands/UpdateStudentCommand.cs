@@ -43,16 +43,8 @@ namespace Application.Services.StudentServices.StudentCommands
 
             // Update - Handle Student  || Task ||    
             public async Task<int> Handle(UpdateStudentCommand command, CancellationToken cancellationToken)
-            {
-                  
-                return await _studentRepository.Update(command.StudentDTO);
-                
-                //-------OLD---------------------------------
-                //Student student = new Student();
-                //student.FirstName = command.FirstName;
-                //student.Id = command.Id;
-                //student.RowVersion = command.RowVersion;
-                //return await _studentRepository.Update(student);     
+            {     
+                return await _studentRepository.Update(command.StudentDTO);   
             }
         }    
     }

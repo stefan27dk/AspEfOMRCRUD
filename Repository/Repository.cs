@@ -41,6 +41,8 @@ namespace Repository
 
 
 
+
+
         // Delete
         public async Task<int> Delete(TEntity entity)
         {
@@ -67,23 +69,7 @@ namespace Repository
 
 
 
-
-        //// Get
-        //public async Task<TEntity> Get(int id)
-        //{
-        //    return await context.Set<TEntity>().FindAsync(id); // Find
-        //}
-
-
-
-
-
-        ////Get All
-        //public async Task<List<TEntity>> GetAll()
-        //{
-        //    return await context.Set<TEntity>().ToListAsync(); // Return List of All Entities of this type
-        //}
-
+      
 
 
 
@@ -101,8 +87,7 @@ namespace Repository
                        { 
                          context.Entry(entity_exist).CurrentValues.SetValues(entity); // Replace Values
                          context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion;
-                         await context.SaveChangesAsync();
-                         return entity.Id;   
+                         return await context.SaveChangesAsync();  
                        }
                        catch(DbUpdateConcurrencyException)
                        {
@@ -111,8 +96,7 @@ namespace Repository
                     
                 }
 
-                return default;  
-           
+                return default;      
         }
     }
 }
