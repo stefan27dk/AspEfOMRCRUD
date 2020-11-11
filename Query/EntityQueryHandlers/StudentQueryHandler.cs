@@ -45,10 +45,7 @@ namespace Query.EntityQueryHandlers
         // Get StudentViewModel By Id
         public async Task<StudentViewModel> Get_ViewModelAsync(int id, CancellationToken cancellationToken)
         {
-
-        
-          
-
+           
             return await context.Set<StudentViewModel>().FirstOrDefaultAsync(e => e.Id == id);
         }
     }
