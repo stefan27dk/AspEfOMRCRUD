@@ -160,15 +160,17 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                int Id = await Mediator.Send(new DeleteStudentByIdCommand { StudentDTO = new Student { Id = model.Id , RowVersion = model.RowVersion}});  // Delete Student
-                if (Id == default)
+                int sucsess = await Mediator.Send(new DeleteStudentByIdCommand { StudentDTO = new Student { Id = model.Id , RowVersion = model.RowVersion}});  // Delete Student
+
+                if (sucsess == default) // If Error
                 {     
                     TempData["ConcurrencyConflictMsg"] = "Concurrency Conflict - Item was Edited";
                     return RedirectToAction("Delete", "Student", $"{model.Id}");
                 }
-                return RedirectToAction(nameof(Index)); // Return Index View
+                
+                return RedirectToAction(nameof(Index)); // Return Index View     
             }
-            return View();
+            return View(model);
         }
 
 

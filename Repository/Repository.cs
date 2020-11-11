@@ -50,22 +50,19 @@ namespace Repository
             if (entity_exist != null)
             {
                 try
-                {    
-                    context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion;
-                    context.Set<TEntity>().Remove(entity_exist);
-                    await context.SaveChangesAsync(); // Save
-                    return entity.Id;
+                {   
+                    context.Entry(entity_exist).Property("RowVersion").OriginalValue = entity.RowVersion; // Assigns the RowVersion of the Justs retrived Entity to the RowVersion of the Entity which was Retrived from the DeleteView "It uses Tracking to assign the Default value of RowVersion" if the value is assigned as usual the original value will remain the same.
+                    context.Set<TEntity>().Remove(entity_exist); 
+                    return await context.SaveChangesAsync(); // Save  // If RowVersion is different there will be Concurrency Exception  
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     return default;
-                }
-
+                }    
             }
 
             return default;
-
-
+              
         }
 
 
