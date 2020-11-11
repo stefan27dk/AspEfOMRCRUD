@@ -36,7 +36,7 @@ namespace Query.EntityQueryHandlers
         {
             //return await context.Set<StudentViewModel>().ToListAsync(); // Return List of All Entities of this type   
                
-            return await context.Set<Student>().Select(student => new StudentViewModel { FirstName = student.FirstName, Id = student.Id }).ToListAsync();
+            return await context.Set<Student>().Select(student => new StudentViewModel { FirstName = student.FirstName, Id = student.Id, RowVersion = student.RowVersion }).ToListAsync();
         }
 
 
@@ -45,7 +45,7 @@ namespace Query.EntityQueryHandlers
         // Get StudentViewModel By Id
         public async Task<StudentViewModel> Get_ViewModelAsync(int id, CancellationToken cancellationToken)
         {   
-            return await context.Set<Student>().Select(student => new StudentViewModel {FirstName = student.FirstName, Id = student.Id}).FirstOrDefaultAsync(e => e.Id == id);
+            return await context.Set<Student>().Select(student => new StudentViewModel {FirstName = student.FirstName, Id = student.Id, RowVersion = student.RowVersion}).FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }

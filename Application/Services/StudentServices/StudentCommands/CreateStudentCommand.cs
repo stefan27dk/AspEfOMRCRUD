@@ -42,16 +42,7 @@ namespace Application.Services.Command
 
             // Handle Student  || Task ||
             public async Task<int> Handle(CreateStudentCommand command, CancellationToken cancellationToken)
-            {
-                //var student = new student();
-                //student.firstname = command.firstname;
-                //await _studentrepository.add(student);
-                //return student.id;     
-
-
-                //--------------NEW-----------------------------##############
-
-
+            {   
                 await _studentRepository.Add(command.StudentDTO);
                 return command.StudentDTO.Id;
             }

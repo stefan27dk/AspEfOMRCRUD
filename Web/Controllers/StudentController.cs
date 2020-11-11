@@ -16,6 +16,7 @@ using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Microsoft.VisualBasic;
 using Query.EntityQueryHandlers;
 using Query.EntityQueries;
+using Domain.ViewModels;
 
 namespace Web.Controllers
 {
@@ -121,7 +122,7 @@ namespace Web.Controllers
         // Edit / Update - Student || Logic || ------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Student model)
+        public async Task<IActionResult> Edit(StudentViewModel model)
         {
             if(ModelState.IsValid)
             {   
@@ -147,7 +148,7 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int Id)
         {
-            var student = await Mediator.Send(new GetStudentByIdQuery { Id = Id }); // Get by ID
+            var student = await Mediator.Send(new GetStudentAsViewModelByIdQuery { Id = Id }); // Get by ID
             if (student == null) 
             { 
                 return NotFound(); 
@@ -162,11 +163,11 @@ namespace Web.Controllers
         // Delete - || Logic Student || ---------------------------------------------------------------------  
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(Student model)
+        public async Task<IActionResult> Delete(StudentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                int Id = await Mediator.Send(new DeleteStudentByIdCommand { Id = model.Id, FirstName = model.FirstName, RowVersion = model.RowVersion });  // Delete Student
+                int Id = await Mediator.Send(new DeleteStudentByIdCommand { StudentDTO = new Student { Id = model.Id , RowVersion = model.RowVersion}});  // Delete Student
                 if (Id == default)
                 {     
                     TempData["ConcurrencyConflictMsg"] = "Concurrency Conflict - Item was Edited";
