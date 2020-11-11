@@ -29,8 +29,7 @@ namespace Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598  
 
 
-        // Index Get All- || Student View ||
-   
+        // ================= Index Get All- || Student View || ==========================================    
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Index()
@@ -75,30 +74,24 @@ namespace Web.Controllers
         // Create - || Logic - Student || ----------------------------------------------------------- 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,Id")] Student student, CreateStudentCommand command)
-        {
-            //if (ModelState.IsValid)
-            //{    
-            //     command.FirstName = student.FirstName;
-            //     await Mediator.Send(command);   
-            //     return RedirectToAction(nameof(Index));
-            //}
-            //return View(student);
-
-
-
-
-            //------NEW------------------------############
-             
-
+        public async Task<IActionResult> Create([Bind("FirstName,Id")] StudentViewModel student, CreateStudentCommand command)
+        {    
             if (ModelState.IsValid)
             {
                 command.StudentDTO.FirstName = student.FirstName;
-                await Mediator.Send(command);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(student);
+                 
+                if(await Mediator.Send(command)> 0)  // If Successful Saved to Db 
+                {
+                   return RedirectToAction(nameof(Index));  
+                }
+                else
+                {
+                    TempData["Save-Error"] = "Could not Save to the Database"; // Show the User Error Text
+                    return View(student); // Return the Model to the View
+                }
 
+            }
+            return View(student);    
         }
 
 

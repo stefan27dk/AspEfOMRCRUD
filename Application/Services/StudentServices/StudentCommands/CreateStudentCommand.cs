@@ -16,12 +16,11 @@ namespace Application.Services.Command
     // =========== Student Command || Class || ====================     
     public class CreateStudentCommand : IRequest<int>
     {
-        // Student - Props    
-        //public string FirstName { get; set; }
-
-
-        //-----New-------------------------##############
+       
+        // Dto
         public Student StudentDTO { get; set; } = new Student();
+
+
 
 
 
@@ -42,9 +41,8 @@ namespace Application.Services.Command
 
             // Handle Student  || Task ||
             public async Task<int> Handle(CreateStudentCommand command, CancellationToken cancellationToken)
-            {   
-                await _studentRepository.Add(command.StudentDTO);
-                return command.StudentDTO.Id;
+            {    
+                return await _studentRepository.Add(command.StudentDTO);
             }
         }
     }

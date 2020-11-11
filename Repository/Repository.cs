@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using System.Linq;
 using Persistence.Migrations;
+using System.Diagnostics.Tracing;
+using System.Diagnostics;
 
 namespace Repository
 {
@@ -30,11 +32,10 @@ namespace Repository
 
 
         // ADD
-        public async Task<TEntity> Add(TEntity entity)
+        public async Task<int> Add(TEntity entity)
         {    
-            context.Set<TEntity>().Add(entity);
-            await context.SaveChangesAsync(); // Waits for async executing of "context.Set<TEntity>().Add(entity);" and than it SavesAsync. 
-            return entity;
+            context.Set<TEntity>().Add(entity);   
+            return await context.SaveChangesAsync(); // Waits for async executing of "context.Set<TEntity>().Add(entity);" and than it SavesAsync. 
         }
 
 
