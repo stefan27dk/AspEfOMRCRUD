@@ -131,9 +131,9 @@ namespace Web.Controllers
 
 
 
-
-         [AcceptVerbs("Get", "Post")]
-         [AllowAnonymous]
+         // Remember jquery.js, jquery.validate.js and jquery.validate.unobtrusive.js in the _Layout.cshtml
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
         public async Task<IActionResult> IsEmailInUse(string email)
         {
             var user = await userManager.FindByEmailAsync(email);
