@@ -21,6 +21,7 @@ using Query;
 using Query.EntityQueryHandlers;
 using Repository.EntityRepositories;
 using Web.Data;
+using Web.Models;
 
 namespace Web
 {
@@ -54,7 +55,7 @@ namespace Web
 
 
             // Log In
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 // Password settings.
                 options.Password.RequireDigit = false;

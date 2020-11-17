@@ -33,6 +33,8 @@ namespace Web.ViewModels.AccountViewModels
 
 
 
+
+        public string City { get; set; }
         //[Display(Name = "Remember Me")]
         //public bool RememberMe { get; set; }
 
