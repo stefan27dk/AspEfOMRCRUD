@@ -50,7 +50,7 @@ namespace Web.Controllers
                 // If OK
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("ListRoles", "Administration");
                 }
                   
                 // If Error - Add errors to modelstate
@@ -63,5 +63,20 @@ namespace Web.Controllers
              
             return View(model); // Return model with the Errors from the foreach loop
         }
+
+
+
+
+
+
+         // List - Roles
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
+        }
+
+
     }
 }
