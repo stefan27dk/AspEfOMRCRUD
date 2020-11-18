@@ -144,7 +144,7 @@ namespace Web.Controllers
             }
             else
             {
-                return Json($"Email {email} is in use");
+                return Json($"Email {email} is in use"); // Jquery Use it
             }
         }
 

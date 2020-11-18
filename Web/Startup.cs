@@ -137,9 +137,9 @@ namespace Web
             // Log In 
             app.UseAuthentication();
             app.UseAuthorization();
-     
 
 
+          
 
             // End Points
             app.UseEndpoints(endpoints =>
@@ -147,8 +147,7 @@ namespace Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();  // Log In 
-                 
+                endpoints.MapRazorPages();  // Log In     
             });
         }
     }
