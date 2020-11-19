@@ -96,11 +96,7 @@ namespace Web
 
             // Log In
             services.AddRazorPages();
-
-
-
-
-
+              
         }
 
        

@@ -20,7 +20,7 @@ using Domain.ViewModels;
 
 namespace Web.Controllers
 {
-     
+    [Authorize(Roles = "Admin, User")]
     public class StudentController : BaseController
     {
 
@@ -135,9 +135,11 @@ namespace Web.Controllers
 
 
 
-                 
+
 
         // ================= Delete - || Student View || ================================================== 
+        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User")]
         [HttpGet]
         public async Task<IActionResult> Delete(int Id)
         {
