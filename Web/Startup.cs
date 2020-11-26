@@ -71,7 +71,7 @@ namespace Web
 
 
             // Log In - Authorization to alll Actions 
-            // Its Like Addin [Authorize to all Actions in all Controllers]
+            // Its Like Adding [Authorize to all Actions in all Controllers]
             // In order to be able to acsess this action as Anonymouse user we 
             // just add [AllowAnonymouse] over the Action
             services.AddMvc(options => {
