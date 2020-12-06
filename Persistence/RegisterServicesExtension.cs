@@ -18,10 +18,10 @@ namespace Persistence
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             //============= Db Context - Registration ====================
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContextPool<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))); // Connectionstring
             //b => b.MigrationsAssembly("AspEfOMRCRUD.Persistence.Migrations"))); // Migrations Path
-                                
+            // AddDbContextPool - Is Used for better performance. Get allways an instance of already created DbContext so its not created every time                  
             
             //============= Db Context - Interface - Registration =========   
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>()); // Register the IApplication Db context
