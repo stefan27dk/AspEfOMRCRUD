@@ -41,11 +41,9 @@ namespace Web
         public void ConfigureServices(IServiceCollection services)// This method gets called by the runtime. Use this method to add services to the container.
         {
 
-           
-
-
-            // Log in - DbContext
-            services.AddDbContext<LogInContext>(options =>
+              
+             // Log in - DbContext
+             services.AddDbContextPool<LogInContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("LogInContextConnection")));
             //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //.AddEntityFrameworkStores<LogInContext>();
